@@ -1,0 +1,52 @@
+Start
+Define class TrieNode
+    Attributes: children (map), isEnd, word, popularity
+    Constructor()
+        Initialize children as empty map
+        Set isEnd to false
+        Set word to empty
+        Set popularity to 0
+End class
+
+Initialize root as new TrieNode
+
+Function insert(word, popularity)
+    Set current to root
+    For each character in word
+        If character not in current.children
+            Add new TrieNode to current.children[character]
+        Set current to current.children[character]
+    Set current.isEnd to true
+    Set current.word to word
+    Set current.popularity to popularity
+End function
+
+Function dfs(node, result)
+    If node.isEnd
+        Add (node.word, node.popularity) to result
+    For each child in node.children
+        Call dfs(child, result)
+End function
+
+Function search(prefix, N)
+    Set current to root
+    For each character in prefix
+        If character not in current.children
+            Return empty list
+        Set current to current.children[character]
+    Initialize result as empty list
+    Call dfs(current, result)
+    Sort result by popularity descending
+    Return top N words from result
+End function
+
+Main
+    insert("pizza hut", 10)
+    insert("pizza point", 5)
+    insert("pita bread", 7)
+    insert("pizzeria", 6)
+    search("pi", 3)
+    insert("pineapple cafe", 4)
+    insert("pita bread", 15)
+    search("pi", 3)
+End

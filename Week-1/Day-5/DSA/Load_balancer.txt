@@ -1,0 +1,40 @@
+Start
+Define class Server
+    Attributes: name
+    Constructor(name)
+        Set name
+End class
+
+Initialize serverQueue as empty Queue
+
+Function addServer(name)
+    Create new Server(name)
+    Enqueue server into serverQueue
+End function
+
+Function removeServer(name)
+    Initialize tempQueue as empty Queue
+    While serverQueue not empty
+        Dequeue server
+        If server.name not equal to name
+            Enqueue server into tempQueue
+    Set serverQueue to tempQueue
+End function
+
+Function processRequests(requestList)
+    For each request in requestList
+        Dequeue server from serverQueue
+        Print request + " → " + server.name
+        Enqueue server back into serverQueue
+End function
+
+Main
+    addServer("S1")
+    addServer("S2")
+    addServer("S3")
+    processRequests(["R1", "R2", "R3"])
+    addServer("S4")
+    processRequests(["R4", "R5"])
+    removeServer("S2")
+    processRequests(["R6", "R7", "R8"])
+End
