@@ -1,0 +1,38 @@
+Start
+    Input: A list of 'Employee' objects. 
+           Each Employee has: Name, Department, PerformanceRating, Salary.
+           
+    Process the list of employees to produce a 'finalBonusReport'.
+
+    Group the employees by their 'Department'.
+
+    For each Department group, apply the following custom logic:
+    
+        1. Accumulate department-wide data:
+           Calculate 'totalDepartmentSalary' by summing the salaries of all employees in the group.
+           Calculate 'totalRatingPoints' by summing the performance ratings of all employees in the group.
+        
+        2. Calculate the bonus pool:
+           'bonusPool' = 'totalDepartmentSalary' * 0.10
+        
+        3. Distribute the pool proportionally:
+           Create an empty map 'departmentBonusDistribution'.
+           For each 'employee' in the current Department group:
+               If 'totalRatingPoints' is greater than 0:
+                   'individualBonus' = ('bonusPool' * employee.PerformanceRating) / 'totalRatingPoints'
+               Else:
+                   'individualBonus' = 0
+                   
+               Add the pair (employee.Name, individualBonus) to 'departmentBonusDistribution'.
+        
+        The result for this department is the 'departmentBonusDistribution' map.
+
+
+
+  
+    Print "Employee Bonus Distribution Report:"
+    For each entry (Department, distributionMap) in 'finalBonusReport':
+        Print "Department: " + Department
+        For each bonusEntry (employeeName, bonusAmount) in distributionMap:
+            Print "  - Employee: " + employeeName + ", Bonus: ₹" + bonusAmount
+End

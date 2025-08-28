@@ -1,0 +1,29 @@
+Start
+    Input: A nested map named 'energyData' with the structure: 
+           Map<Zone, Map<Day, List<Reading>>>
+
+    Create a new empty map 'peakUsageReport' to store the results.
+    
+    
+    For each zoneEntry (Zone, dailyDataMap) in energyData:
+    
+        Create a new empty map 'dailyPeakMap' for the current zone.
+        
+        For each dayEntry (Day, readingsList) in dailyDataMap:
+        
+            
+            Find the maximum value in 'readingsList'.
+            Store this value in a variable named 'peakReading'.
+            
+            If a peakReading was found:
+                Add the pair (Day, peakReading) to the 'dailyPeakMap'.
+            
+        Add the pair (Zone, dailyPeakMap) to the 'peakUsageReport'.
+        
+    
+    Print "Peak Energy Consumption Report:"
+    For each zoneEntry (Zone, dailyPeakMap) in peakUsageReport:
+        Print "Zone: " + Zone
+        For each dayEntry (Day, peakReading) in dailyPeak-Map:
+            Print "  - Day: " + Day + ", Peak Usage: " + peakReading + "kW"
+End
