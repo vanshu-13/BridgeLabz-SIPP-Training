@@ -1,0 +1,68 @@
+PSEUDOCODE: Simple Word Counter
+
+CLASS WordCounter:
+    ATTRIBUTES:
+        - wordFrequency (Map<String, Integer>)
+    
+    CONSTRUCTOR WordCounter():
+        INITIALIZE wordFrequency as empty HashMap<String, Integer>
+    
+    METHOD processText(text):
+        // Using Stream API to process text
+        SET words = text.toLowerCase()
+                       .replaceAll("[^a-zA-Z\\s]", "") // Remove punctuation
+                       .split("\\s+") // Split by whitespace
+        
+        FOR each word in words:
+            IF word is not empty:
+                IF wordFrequency contains word:
+                    SET count = GET word from wordFrequency
+                    PUT word, count + 1 in wordFrequency
+                ELSE:
+                    PUT word, 1 in wordFrequency
+    
+    METHOD displayWordCounts():
+        PRINT "Word Frequency Analysis:"
+        FOR each word, count in wordFrequency:
+            PRINT word + " → " + count
+    
+    METHOD displaySortedByFrequency():
+        // Convert to list and sort by frequency (descending)
+        CREATE sortedWords as list from wordFrequency entries
+        SORT sortedWords by value (descending), then by key (ascending)
+        
+        PRINT "Words sorted by frequency:"
+        FOR each entry in sortedWords:
+            PRINT entry.key + " (" + entry.value + ")"
+    
+    METHOD getMostFrequentWord():
+        IF wordFrequency is empty:
+            RETURN null
+        
+        SET maxCount = 0
+        SET mostFrequent = ""
+        
+        FOR each word, count in wordFrequency:
+            IF count > maxCount:
+                SET maxCount = count
+                SET mostFrequent = word
+        
+        RETURN mostFrequent + " (appears " + maxCount + " times)"
+
+MAIN METHOD:
+    CREATE counter = new WordCounter()
+    
+    SET paragraph = "The news today is about the rise in technology trends. The technology trends are changing rapidly."
+    
+    PRINT "Original text: " + paragraph
+    PRINT newline
+    
+    CALL counter.processText(paragraph)
+    
+    CALL counter.displayWordCounts()
+    PRINT newline
+    
+    CALL counter.displaySortedByFrequency()
+    PRINT newline
+    
+    PRINT "Most frequent word: " + counter.getMostFrequentWord()

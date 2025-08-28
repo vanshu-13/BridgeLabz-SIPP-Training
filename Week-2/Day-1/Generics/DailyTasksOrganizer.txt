@@ -1,0 +1,64 @@
+PSEUDOCODE: Daily Tasks Organizer
+
+CLASS TaskOrganizer:
+    ATTRIBUTES:
+        - tasks (LinkedHashMap<Integer, String>)
+        - nextTaskId (Integer)
+    
+    CONSTRUCTOR TaskOrganizer():
+        INITIALIZE tasks as empty LinkedHashMap<Integer, String>
+        SET nextTaskId = 1
+    
+    METHOD addTask(taskDescription):
+        PUT nextTaskId, taskDescription in tasks
+        PRINT "Added Task " + nextTaskId + ": " + taskDescription
+        INCREMENT nextTaskId
+        RETURN nextTaskId - 1
+    
+    METHOD removeTask(taskId):
+        IF tasks contains taskId:
+            SET removedTask = REMOVE taskId from tasks
+            PRINT "Completed Task " + taskId + ": " + removedTask
+            RETURN true
+        PRINT "Task not found: " + taskId
+        RETURN false
+    
+    METHOD displayTasks():
+        IF tasks is empty:
+            PRINT "No pending tasks"
+            RETURN
+        
+        PRINT "Pending Tasks (in order):"
+        FOR each taskId, description in tasks:
+            PRINT taskId + " → " + description
+    
+    METHOD getTaskCount():
+        RETURN tasks.size()
+
+MAIN METHOD:
+    CREATE organizer = new TaskOrganizer()
+    
+    // Morning task entry
+    CALL organizer.addTask("Check emails")
+    CALL organizer.addTask("Prepare sales report")
+    CALL organizer.addTask("Call client")
+    
+    PRINT newline
+    CALL organizer.displayTasks()
+    
+    // Midday - complete task 2
+    PRINT newline
+    CALL organizer.removeTask(2)
+    
+    PRINT newline
+    CALL organizer.displayTasks()
+    
+    // Add more tasks
+    CALL organizer.addTask("Review budget")
+    CALL organizer.addTask("Team meeting")
+    
+    PRINT newline
+    CALL organizer.displayTasks()
+    
+    PRINT newline
+    PRINT "Total pending tasks: " + organizer.getTaskCount()
