@@ -1,0 +1,72 @@
+PSEUDOCODE: Movie Ticket Booking
+
+CLASS Ticket:
+    ATTRIBUTES:
+        - movieName (String)
+        - seatNumber (String)
+        - price (Double)
+        - isBooked (Boolean)
+    
+    CONSTRUCTOR Ticket(movieName, seatNumber, price):
+        SET this.movieName = movieName
+        SET this.seatNumber = seatNumber
+        SET this.price = price
+        SET isBooked = false
+    
+    METHOD bookTicket():
+        SET isBooked = true
+        PRINT "Ticket booked: " + movieName + " Seat " + seatNumber
+    
+    METHOD cancelTicket():
+        SET isBooked = false
+        PRINT "Ticket cancelled: " + seatNumber
+
+CLASS Theatre:
+    ATTRIBUTES:
+        - availableSeats (Set<String>)
+        - bookedTickets (List<Ticket>)
+    
+    CONSTRUCTOR Theatre():
+        INITIALIZE availableSeats with ["A1", "A2", "A3", "B1", "B2"]
+        INITIALIZE bookedTickets as empty list
+    
+    METHOD bookTicket(movieName, seatNumber, price):
+        IF availableSeats.contains(seatNumber):
+            SET ticket = new Ticket(movieName, seatNumber, price)
+            CALL ticket.bookTicket()
+            REMOVE seatNumber from availableSeats
+            ADD ticket to bookedTickets
+            RETURN ticket
+        PRINT "Seat not available"
+        RETURN null
+    
+    METHOD cancelTicket(ticket):
+        CALL ticket.cancelTicket()
+        ADD ticket.seatNumber to availableSeats
+        REMOVE ticket from bookedTickets
+
+CLASS Customer:
+    ATTRIBUTES:
+        - name (String)
+        - tickets (List<Ticket>)
+    
+    CONSTRUCTOR Customer(name):
+        SET this.name = name
+        INITIALIZE tickets as empty list
+    
+    METHOD bookMovie(theatre, movieName, seatNumber, price):
+        SET ticket = theatre.bookTicket(movieName, seatNumber, price)
+        IF ticket is not null:
+            ADD ticket to tickets
+        RETURN ticket
+    
+    METHOD cancelBooking(theatre, ticket):
+        CALL theatre.cancelTicket(ticket)
+        REMOVE ticket from tickets
+
+MAIN METHOD:
+    CREATE theatre = new Theatre()
+    CREATE customer = new Customer("Ravi")
+    
+    SET ticket = customer.bookMovie(theatre, "Avengers: Endgame", "A1", 250.0)
+    CALL customer.cancelBooking(theatre, ticket)
