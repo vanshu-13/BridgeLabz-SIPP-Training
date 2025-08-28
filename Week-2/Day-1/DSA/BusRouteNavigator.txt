@@ -1,0 +1,90 @@
+PSEUDOCODE: Bus Route Navigator
+
+CLASS BusStop:
+    ATTRIBUTES:
+        - stopName (String)
+        - next (BusStop)
+    
+    CONSTRUCTOR BusStop(stopName):
+        SET this.stopName = stopName
+        SET next = null
+
+CLASS BusRoute:
+    ATTRIBUTES:
+        - head (BusStop)
+    
+    CONSTRUCTOR BusRoute():
+        SET head = null
+    
+    METHOD addStop(stopName):
+        SET newStop = new BusStop(stopName)
+        IF head is null:
+            SET head = newStop
+        ELSE:
+            SET current = head
+            WHILE current.next is not null:
+                SET current = current.next
+            SET current.next = newStop
+        PRINT "Added stop: " + stopName
+    
+    METHOD insertAfter(afterStop, newStopName):
+        SET current = head
+        WHILE current is not null:
+            IF current.stopName equals afterStop:
+                SET newStop = new BusStop(newStopName)
+                SET newStop.next = current.next
+                SET current.next = newStop
+                PRINT "Inserted " + newStopName + " after " + afterStop
+                RETURN
+            SET current = current.next
+        PRINT "Stop not found: " + afterStop
+    
+    METHOD removeStop(stopName):
+        IF head is null:
+            RETURN
+        
+        IF head.stopName equals stopName:
+            SET head = head.next
+            PRINT "Removed stop: " + stopName
+            RETURN
+        
+        SET current = head
+        WHILE current.next is not null:
+            IF current.next.stopName equals stopName:
+                SET current.next = current.next.next
+                PRINT "Removed stop: " + stopName
+                RETURN
+            SET current = current.next
+    
+    METHOD searchStop(stopName):
+        SET current = head
+        WHILE current is not null:
+            IF current.stopName equals stopName:
+                PRINT "Stop found: " + stopName
+                RETURN true
+            SET current = current.next
+        PRINT "Stop not found: " + stopName
+        RETURN false
+    
+    METHOD displayRoute():
+        SET current = head
+        PRINT "Route: "
+        WHILE current is not null:
+            PRINT current.stopName
+            IF current.next is not null:
+                PRINT " → "
+            SET current = current.next
+
+MAIN METHOD:
+    CREATE route = new BusRoute()
+    
+    CALL route.addStop("Depot")
+    CALL route.addStop("Main Street")
+    CALL route.addStop("City Mall")
+    CALL route.addStop("Hospital")
+    CALL route.addStop("Airport")
+    
+    CALL route.insertAfter("City Mall", "University")
+    CALL route.removeStop("Hospital")
+    CALL route.searchStop("Airport")
+    CALL route.displayRoute()

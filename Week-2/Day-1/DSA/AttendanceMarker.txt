@@ -1,0 +1,78 @@
+PSEUDOCODE: Attendance Marker
+
+CLASS AttendanceSystem:
+    ATTRIBUTES:
+        - attendance (2D Array of Character) // [students][days]
+        - studentNames (Array of String)
+        - totalStudents (Integer)
+        - totalDays (Integer)
+    
+    CONSTRUCTOR AttendanceSystem(studentNames, totalDays):
+        SET this.studentNames = studentNames
+        SET this.totalStudents = studentNames.length
+        SET this.totalDays = totalDays
+        INITIALIZE attendance as 2D array [totalStudents][totalDays]
+        
+        // Initialize all to absent
+        FOR i = 0 to totalStudents-1:
+            FOR j = 0 to totalDays-1:
+                SET attendance[i][j] = 'A'
+    
+    METHOD markAttendance(studentIndex, day, status):
+        IF studentIndex >= 0 AND studentIndex < totalStudents AND day >= 1 AND day <= totalDays:
+            SET attendance[studentIndex][day-1] = status
+            PRINT "Marked " + studentNames[studentIndex] + " as " + status + " on day " + day
+        ELSE:
+            PRINT "Invalid student or day"
+    
+    METHOD updateAttendance(studentIndex, day, newStatus):
+        IF studentIndex >= 0 AND studentIndex < totalStudents AND day >= 1 AND day <= totalDays:
+            SET oldStatus = attendance[studentIndex][day-1]
+            SET attendance[studentIndex][day-1] = newStatus
+            PRINT "Updated " + studentNames[studentIndex] + " day " + day + " from " + oldStatus + " to " + newStatus
+        ELSE:
+            PRINT "Invalid student or day"
+    
+    METHOD generateMonthlyReport(studentIndex):
+        IF studentIndex >= 0 AND studentIndex < totalStudents:
+            SET presentDays = 0
+            FOR day = 0 to totalDays-1:
+                IF attendance[studentIndex][day] == 'P':
+                    INCREMENT presentDays
+            
+            SET attendancePercentage = (presentDays * 100.0) / totalDays
+            PRINT "Monthly Report for " + studentNames[studentIndex] + ":"
+            PRINT "Present: " + presentDays + "/" + totalDays + " days"
+            PRINT "Attendance: " + String.format("%.1f", attendancePercentage) + "%"
+        ELSE:
+            PRINT "Invalid student index"
+    
+    METHOD displayWeeklyAttendance(studentIndex, startDay):
+        IF studentIndex >= 0 AND studentIndex < totalStudents:
+            PRINT "Week attendance for " + studentNames[studentIndex] + ":"
+            FOR day = startDay-1 to Math.min(startDay+6, totalDays)-1:
+                PRINT "Day " + (day+1) + ": " + attendance[studentIndex][day]
+
+MAIN METHOD:
+    CREATE studentNames = ["Alice", "Bob", "Carol"]
+    CREATE system = new AttendanceSystem(studentNames, 30)
+    
+    // Mark first week attendance for Alice (student 0)
+    CALL system.markAttendance(0, 1, 'P')
+    CALL system.markAttendance(0, 2, 'P')
+    CALL system.markAttendance(0, 3, 'A')
+    CALL system.markAttendance(0, 4, 'P')
+    CALL system.markAttendance(0, 5, 'P')
+    CALL system.markAttendance(0, 6, 'P')
+    CALL system.markAttendance(0, 7, 'A')
+    
+    // Update day 3 from A to P
+    CALL system.updateAttendance(0, 3, 'P')
+    
+    // Mark more days as present
+    FOR day = 8 to 30:
+        IF day % 7 != 0: // Skip Sundays
+            CALL system.markAttendance(0, day, 'P')
+    
+    CALL system.displayWeeklyAttendance(0, 1)
+    CALL system.generateMonthlyReport(0)
