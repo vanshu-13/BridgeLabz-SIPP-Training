@@ -1,0 +1,27 @@
+class Room
+    attributes: roomNumber, customerName, daysStayed
+    method calculateBill() → return 0
+
+class DeluxeRoom extends Room
+    private rate = 3000
+    method calculateBill()
+        return daysStayed * rate
+
+class SuiteRoom extends Room
+    private rate = 5000
+    method calculateBill()
+        return daysStayed * rate
+
+start
+    customer1 = new DeluxeRoom("101", "Ravi", 3)
+    print "Room Type: Deluxe"
+    print "Customer: Ravi"
+    print "Nights Stayed: 3"
+    print "Total Bill: " + customer1.calculateBill()
+
+    customer2 = new SuiteRoom("202", "Anita", 2)
+    print "Room Type: Suite"
+    print "Customer: Anita"
+    print "Nights Stayed: 2"
+    print "Total Bill: " + customer2.calculateBill()
+end

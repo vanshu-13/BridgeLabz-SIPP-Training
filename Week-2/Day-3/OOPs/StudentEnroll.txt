@@ -1,0 +1,61 @@
+CLASS Course
+    PRIVATE title
+    PRIVATE duration
+    PRIVATE price
+
+    METHOD Constructor(title, duration, price)
+        SET this.title = title
+        SET this.duration = duration
+        SET this.price = price
+
+    METHOD getTitle()
+        RETURN title
+
+    METHOD getDuration()
+        RETURN duration
+
+    METHOD getPrice()
+        RETURN price
+
+    METHOD toString()
+        RETURN title + " - " + duration + " - ₹" + price
+
+
+CLASS Student
+    PRIVATE name
+    PRIVATE email
+    PRIVATE enrolledCourses (List of Course)
+
+    METHOD Constructor(name, email)
+        SET this.name = name
+        SET this.email = email
+        SET enrolledCourses as empty list
+
+    METHOD enrollCourse(course)
+        IF course NOT in enrolledCourses
+            ADD course to enrolledCourses
+            PRINT name + " enrolled in " + course.title
+        ELSE
+            PRINT name + " already enrolled in " + course.title
+
+    METHOD viewEnrolledCourses()
+        PRINT name + "'s Enrolled Courses:"
+        FOR each course in enrolledCourses with index i
+            PRINT (i+1) + ". " + course.toString()
+
+
+MAIN
+    CREATE course1 = Course("Java Programming Basics", "6 weeks", 4999)
+    CREATE course2 = Course("Data Structures in Java", "8 weeks", 5999)
+    CREATE course3 = Course("Spring Boot for Web Development", "10 weeks", 6999)
+
+    CREATE student1 = Student("Amit", "amit@gmail.com")
+    CALL student1.enrollCourse(course1)
+    CALL student1.enrollCourse(course2)
+
+    CREATE student2 = Student("Priya", "priya@gmail.com")
+    CALL student2.enrollCourse(course3)
+    CALL student2.enrollCourse(course1)
+
+    CALL student1.viewEnrolledCourses()
+    CALL student2.viewEnrolledCourses()
