@@ -1,0 +1,21 @@
+class ProductSearch
+    method binarySearch(catalog[], target)
+        left = 0
+        right = length(catalog) - 1
+        while left <= right
+            mid = (left + right) / 2
+            if catalog[mid] == target
+                return true
+            else if catalog[mid] < target
+                left = mid + 1
+            else
+                right = mid - 1
+        return false
+
+    method main()
+        catalog = ["AirPods", "Backpack", "Camera", "Laptop", "Shoes", "Smartphone", "Watch"]
+        input = read("Enter product to search: ")
+        if binarySearch(catalog, input)
+            print input + " available"
+        else
+            print "Sorry, " + input + " not found"

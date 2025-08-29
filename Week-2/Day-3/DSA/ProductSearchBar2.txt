@@ -1,0 +1,45 @@
+class Student
+    attributes: name, marks
+    method toString()
+        return name + " - " + marks
+
+function compare(student1, student2)
+    if student1.marks != student2.marks
+        return student2.marks - student1.marks
+    else
+        return alphabetical(student1.name, student2.name)
+
+function mergeSort(studentList)
+    if size(studentList) <= 1
+        return studentList
+    mid = size(studentList) / 2
+    leftHalf = mergeSort(studentList[0..mid-1])
+    rightHalf = mergeSort(studentList[mid..end])
+    return merge(leftHalf, rightHalf)
+
+function merge(left, right)
+    result = empty list
+    while left not empty AND right not empty
+        if compare(left[0], right[0]) <= 0
+            add left[0] to result
+            remove left[0]
+        else
+            add right[0] to result
+            remove right[0]
+    add remaining elements of left to result
+    add remaining elements of right to result
+    return result
+
+start
+    students = [
+        Student("Amit", 92),
+        Student("Bhavna", 92),
+        Student("Kiran", 85),
+        Student("Dinesh", 78),
+        Student("Charu", 92)
+    ]
+    sortedList = mergeSort(students)
+    print "Final Rank List:"
+    for student in sortedList
+        print student.toString()
+end
