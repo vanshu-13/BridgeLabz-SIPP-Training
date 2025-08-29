@@ -1,0 +1,29 @@
+class Transaction<T>
+    attribute: paymentDetails
+    method processPayment()
+        if T == UPI
+            print "Payment of " + paymentDetails.amount + " via UPI successful for " + paymentDetails.merchantName
+        else if T == Card
+            print "Payment of " + paymentDetails.amount + " via Card ending " + last4(paymentDetails.cardNumber) + " successful for " + paymentDetails.merchantName
+        else if T == NetBanking
+            print "Payment of " + paymentDetails.amount + " via NetBanking (" + paymentDetails.bankName + ") successful"
+
+class UPI
+    attributes: upiId, amount, merchantName
+
+class Card
+    attributes: cardNumber, cvv, expiryDate, amount, merchantName
+
+class NetBanking
+    attributes: bankName, accountNumber, amount, merchantName
+
+start
+    t1 = new Transaction<UPI>(UPI("ramesh@upi",1200,"Amazon"))
+    t1.processPayment()
+
+    t2 = new Transaction<Card>(Card("1234-5678-9876-5432","123","12/27",5000,"MakeMyTrip"))
+    t2.processPayment()
+
+    t3 = new Transaction<NetBanking>(NetBanking("HDFC","00112233",8000,"SalaryPayment"))
+    t3.processPayment()
+end
